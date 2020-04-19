@@ -9,20 +9,20 @@
 
         <div class="form-group">
           <label for="inputName"><strong>用途 *</strong></label>
-          <input type="text" class="form-control" id="inputName" name="name" placeholder="用途">
+          <input type="text" class="form-control" id="inputName" name="name" placeholder="用途" value="{{record.name}}">
         </div>
 
         <div class="form-group">
           <label for="googleMap"><strong>金額 *</strong></label>
-          <input type="number" class="form-control" id="googleMap" placeholder="金額" name="amount" step="1" min="0"
-          onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))"/>
+          <input type="number" value="{{record.amount}}" class="form-control" id="googleMap" placeholder="金額"
+            name="amount" step="1" min="0" onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" />
         </div>
 
         <div class="form-group">
           <label for="inputcategory"><strong>日期 *</strong></label>
           <input type="date" class="form-control" name="date" id="inputcategory" value="{{today}}">
         </div>
-        
+
         <div class="form-group">
           <label class="" for=""><strong>類別 * </strong></label>
           <select class="form-control" name="category">
@@ -36,7 +36,8 @@
 
         <div class="form-group">
           <label for="inputDescription"><strong>店家</strong></label>
-          <input type="text" class="form-control" id="inputDescription" placeholder="店家" name="merchant">
+          <input type="text" class="form-control" id="inputDescription" placeholder="店家" name="merchant"
+            value="{{record.merchant}}">
         </div>
 
         <button class="btn btn-primary" type="submit">新增</button>

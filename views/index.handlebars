@@ -76,12 +76,14 @@
           {{#ifEquals this.category "others"}}<i class="fas fa-pen fa-2x"></i>{{/ifEquals}}
         </div>
         <div class="col-1 d-inline-block align-self-center" style="text-align: center;"> {{ this.name }} </div>
-        <div class="col-2 d-inline-block align-self-center" name="date" style="text-align: center;"> {{ this.date }} </div>
-        <div class="col-2 d-inline-block align-self-center" name="amount" style="text-align: center;"> {{ this.amount }} </div>
-        <a href="/records/{{{this._id}}}/edit" style="display: inline-block;">
+        <div class="col-2 d-inline-block align-self-center" name="date" style="text-align: center;"> {{ this.date }}
+        </div>
+        <div class="col-2 d-inline-block align-self-center" name="amount" style="text-align: center;"> {{ this.amount }}
+        </div>
+        <a href="/records/{{{this.id}}}/edit" style="display: inline-block;">
           <button type="button" class="btn btn-success">修改</button>
         </a>
-        <form action="/records/{{{this._id}}}/delete?_method=DELETE" method="POST" style="display: inline-block;">
+        <form action="/records/{{{this.id}}}/delete?_method=DELETE" method="POST" style="display: inline-block;">
           <button type="submit" class="btn btn-danger">刪除</button></form>
       </div>
       {{/each}}
