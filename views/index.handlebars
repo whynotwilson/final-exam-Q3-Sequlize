@@ -1,0 +1,92 @@
+<!-- ./views/index.handlebars -->
+<div class="d-flex flex-column">
+  <!-- filter bar -->
+  <div class="d-flex flex-column" style="text-align: left;">
+    <div class="d-flex justify-content-center" style="border-radius: 8px">
+      {{!-- 類別 --}}
+      <div class="dropdown mb-2 col-3">
+        <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="dropdownMenuButton"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          類別 {{#if category}} : {{category}}{{/if}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="/records{{#if month}}?month={{month}}{{/if}}">All</a>
+          <a class="dropdown-item" href="/records?{{#if month}}month={{month}}&{{/if}}category=home">家居物業</a>
+          <a class="dropdown-item" href="/records?{{#if month}}month={{month}}&{{/if}}category=transportation">交通出行</a>
+          <a class="dropdown-item"
+            href="/records?{{#if month}}month={{month}}&{{/if}}category=entertainment"></i>休閒娛樂</a>
+          <a class="dropdown-item" href="/records?{{#if month}}month={{month}}&{{/if}}category=food">餐飲食品</a>
+          <a class="dropdown-item" href="/records?{{#if month}}month={{month}}&{{/if}}category=others">其他</a>
+        </div>
+      </div>
+      {{!-- 月份 --}}
+      <div class="dropdown mb-2 col-3">
+        <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="dropdownMenuButton"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          月份 {{#if month}} : {{month}}{{/if}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="/records{{#if category}}?category={{category}}{{/if}}">All</a>
+          <a class="dropdown-item" href="/records?month=01{{#if category}}&category={{category}}{{/if}}">一月</a>
+          <a class="dropdown-item" href="/records?month=02{{#if category}}&category={{category}}{{/if}}">二月</a>
+          <a class="dropdown-item" href="/records?month=03{{#if category}}&category={{category}}{{/if}}">三月</a>
+          <a class="dropdown-item" href="/records?month=04{{#if category}}&category={{category}}{{/if}}">四月</a>
+          <a class="dropdown-item" href="/records?month=05{{#if category}}&category={{category}}{{/if}}">五月</a>
+          <a class="dropdown-item" href="/records?month=06{{#if category}}&category={{category}}{{/if}}">六月</a>
+          <a class="dropdown-item" href="/records?month=07{{#if category}}&category={{category}}{{/if}}">七月</a>
+          <a class="dropdown-item" href="/records?month=08{{#if category}}&category={{category}}{{/if}}">八月</a>
+          <a class="dropdown-item" href="/records?month=09{{#if category}}&category={{category}}{{/if}}">九月</a>
+          <a class="dropdown-item" href="/records?month=10{{#if category}}&category={{category}}{{/if}}">十月</a>
+          <a class="dropdown-item" href="/records?month=11{{#if category}}&category={{category}}{{/if}}">十一月</a>
+          <a class="dropdown-item" href="/records?month=12{{#if category}}&category={{category}}{{/if}}">十二月</a>
+        </div>
+      </div>
+    </div>
+
+    {{!-- Total expense --}}
+    <div style="max-width: 50%; margin-right:25%; margin-left:25%;" class="mt-2 p-2 d-flex align-self-start mb-5">
+      <h1>總金額：</h1>
+      <h1 style="color: coral;">{{{totalAmount}}}</h1>
+    </div>
+  </div>
+
+  <a class="col-1 btn btn-primary" href="/records/new">新增支出</a>
+
+  <!-- record list -->
+  <div class="d-flex flex-column bd-highlight mb-3 " id="data-panel">
+
+    <div class="d-flex flex-column" id="sortFather">
+      {{!-- 排序列 div --}}
+      <div class="row border rounded-lg pb-2 pt-2">
+        <div class="col-1"></div>
+        <div class="col-1  btn d-inline-block">用途</div>
+        <div class="col-2" style="text-align: center;"><a id="sortDate" class="btn btn-primary" href="#">日期</a>
+        </div>
+        <div class="col-2" style="text-align: center;"><a id="sortAmount" class="btn btn-primary" href="#">價格</a></div>
+      </div>
+
+      {{!-- 內容 div --}}
+      {{#each records}}
+      <div name="sortDatas" class="row border rounded-lg pb-2 pt-2">
+        <div class="col-1 align-self-center" style="text-align: center;">
+          {{#ifEquals this.category "home"}}<i class="fas fa-home fa-2x"></i>{{/ifEquals}}
+          {{#ifEquals this.category "transportation"}}<i class="fas fa-shuttle-van fa-2x"></i>{{/ifEquals}}
+          {{#ifEquals this.category "entertainment"}}<i class="fas fa-grin-beam fa-2x"></i>{{/ifEquals}}
+          {{#ifEquals this.category "food"}}<i class="fas fa-utensils fa-2x"></i>{{/ifEquals}}
+          {{#ifEquals this.category "others"}}<i class="fas fa-pen fa-2x"></i>{{/ifEquals}}
+        </div>
+        <div class="col-1 d-inline-block align-self-center" style="text-align: center;"> {{ this.name }} </div>
+        <div class="col-2 d-inline-block align-self-center" name="date" style="text-align: center;"> {{ this.date }} </div>
+        <div class="col-2 d-inline-block align-self-center" name="amount" style="text-align: center;"> {{ this.amount }} </div>
+        <a href="/records/{{{this._id}}}/edit" style="display: inline-block;">
+          <button type="button" class="btn btn-success">修改</button>
+        </a>
+        <form action="/records/{{{this._id}}}/delete?_method=DELETE" method="POST" style="display: inline-block;">
+          <button type="submit" class="btn btn-danger">刪除</button></form>
+      </div>
+      {{/each}}
+    </div>
+
+  </div>
+
+</div>
