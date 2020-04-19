@@ -1,12 +1,13 @@
 const LocalStrategy = require('passport-local').Strategy
-const User = require('../models/user')
+const db = require('../models')
+const User = db.User
 const bcrypt = require('bcryptjs')
 const FacebookStrategy = require('passport-facebook').Strategy
 
 module.exports = passport => {
   passport.use(
     new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-      User.findOne({ email: email }).then(user => {
+      User.findOne({ where: { email: email } }).then(user => {
         if (!user) {
           return done(null, false, { message: 'Email 尚未註冊' })
         }
@@ -31,9 +32,7 @@ module.exports = passport => {
     }, (accessToken, refreshToken, profile, done) => {
       // 檢查是否已註冊，未註冊就建立新用戶
       // console.log('profile', profile)
-      User.findOne({
-        email: profile._json.email
-      }).then(user => {
+      User.findOne({ where: { email: profile._json.email } }).then(user => {
         if (!user) {
           var randomPassword = Math.random().toString(36).slice(-8)
           bcrypt.genSalt(10, (err, salt) => {
@@ -69,12 +68,10 @@ module.exports = passport => {
     done(null, user.id)
   })
 
-  // 取出 user 資料以後，可能傳給前端樣板，故加入.lean().exec()
   passport.deserializeUser((id, done) => {
-    User.findById(id)
-      .lean()
-      .exec((err, user) => {
-        done(err, user)
-      })
+    User.findByPk(id).then((user) => {
+      user = user.get() // get() 簡單化物件，等同於 .lean()
+      done(null, user)
+    })
   })
 }

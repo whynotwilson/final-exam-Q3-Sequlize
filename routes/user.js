@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express()
-const User = require('../models/user')
+const db = require('../models')
+const User = db.User
 const passport = require('passport')
 const bcrypt = require('bcryptjs')
 
@@ -58,7 +59,7 @@ router.post('/register', (req, res, next) => {
     })
   } else {
     // 尋找 email 是否已被註冊
-    User.findOne({ email: email }).then(user => {
+    User.findOne({ where: { email: email } }).then(user => {
       if (user) {
         errors.push({ message: '此 Email 已註冊' })
         res.render('register', {
