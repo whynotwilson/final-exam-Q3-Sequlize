@@ -41,7 +41,7 @@ module.exports = passport => {
             bcrypt.hash(randomPassword, salt, (err, hash) => {
               if (err) console.error(err)
 
-              var newUser = User({
+              var newUser = new User({
                 name: profile._json.name,
                 email: profile._json.email,
                 password: hash
@@ -49,11 +49,12 @@ module.exports = passport => {
 
               console.log('newUser.email', newUser.email)
 
-              newUser.save().then(user => {
-                return done(null, user)
-              }).catch(err => {
-                console.log(err)
-              })
+              newUser.save()
+                .then(user => {
+                  return done(null, user)
+                }).catch(err => {
+                  console.log(err)
+                })
             })
           })
         } else {
