@@ -8,6 +8,10 @@ const flash = require('connect-flash')
 const passport = require('passport')
 const port = 3000
 
+const db = require('./models')
+const Record = db.Record
+const User = db.User
+
 app.use(flash())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
@@ -33,13 +37,6 @@ app.use(session({
 if (process.env.NODE_ENV !== 'production') { // 如果不是 production 模式
   require('dotenv').config() // 使用 dotenv 讀取 .env 檔案
 }
-
-// 資料庫連線
-
-
-// 連線異常
-
-// 連線成功
 
 // 設定 passport
 app.use(passport.initialize())
